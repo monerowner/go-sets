@@ -2,6 +2,18 @@ package sets
 
 type Set[K comparable] map[K]struct{}
 
+func CreateSetFrom[K comparable](slice []K) Set[K] {
+	set := make(Set[K], len(slice))
+	for _, elem := range slice {
+		set.Insert(elem)
+	}
+	return set
+}
+
+func BuildSet[K comparable](elems ...K) Set[K] {
+	return CreateSetFrom(elems)
+}
+
 func (s Set[K]) Insert(v K) {
 	s[v] = struct{}{}
 }
@@ -34,7 +46,7 @@ func (s Set[K]) Has(v K) bool {
 	return ok
 }
 
-func (s Set[K]) Cardinality() int {
+func (s Set[K]) Size() int {
 	return len(s)
 }
 
@@ -45,7 +57,7 @@ func (s Set[K]) Clear() {
 }
 
 func (s Set[K]) Clone() Set[K] {
-	c := make(Set[K], s.Cardinality())
+	c := make(Set[K], s.Size())
 	for v := range s {
 		c.Insert(v)
 	}
