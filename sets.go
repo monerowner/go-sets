@@ -44,6 +44,14 @@ func (s Set[K]) Clear() {
 	}
 }
 
+func (s Set[K]) Clone() Set[K] {
+	c := make(Set[K], s.Cardinality())
+	for v := range s {
+		c.Insert(v)
+	}
+	return c
+}
+
 func (s Set[K]) Union(other Set[K], additional ...Set[K]) Set[K] {
 	numElements := len(s) + len(other)
 	for _, other := range additional {
