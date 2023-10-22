@@ -10,9 +10,38 @@ func (s Set[K]) Remove(v K) {
 	delete(s, v)
 }
 
+func (s Set[K]) Pop() K {
+	for v := range s {
+		s.Remove(v)
+		return v
+	}
+
+	var zero K
+	return zero
+}
+
+func (s Set[K]) Pick() K {
+	for v := range s {
+		return v
+	}
+
+	var zero K
+	return zero
+}
+
 func (s Set[K]) Has(v K) bool {
 	_, ok := s[v]
 	return ok
+}
+
+func (s Set[K]) Cardinality() int {
+	return len(s)
+}
+
+func (s Set[K]) Clear() {
+	for v := range s {
+		s.Remove(v)
+	}
 }
 
 func (s Set[K]) Union(other Set[K], additional ...Set[K]) Set[K] {
